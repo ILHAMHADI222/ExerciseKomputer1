@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 /**
@@ -77,7 +78,7 @@ public class DataKomputer implements AppInterface {
            }       break;
            }
              viewData (kom);
-             displayAllData();
+            displayAllData();
                }
 
     @Override
@@ -116,28 +117,32 @@ public class DataKomputer implements AppInterface {
 
         return results.isEmpty() ? null : results.get(0);
     }
-      private void displayAllData() {
-        if (textArea == null) {
-            textArea = new JTextArea(20, 50);
-            textArea.setEditable(false);
-            JScrollPane scrollPane = new JScrollPane(textArea);
-            JFrame frame = new JFrame("Data Komputer");
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.getContentPane().add(scrollPane);
-            frame.pack();
-            frame.setVisible(true);
-        }
-        
-        textArea.setText(""); // Mengosongkan area teks sebelum menambahkan data
-
-        for (Komputer kom : komputerList) {
-            textArea.append("Brand\t\t: " + kom.getBrand() +
-                    "\nModel\t\t: " + kom.getModel() +
-                    "\nDisk Type\t: " + kom.getDisk() +
-                    "\nDisk Size\t: " + kom.getDiskSize() +
-                    "\nRAM Size\t: " + kom.getRam() + "\n\n");
-        }
+     private void displayAllData() {
+    if (komputer.length == 0) {
+        JOptionPane.showMessageDialog(null, "Not found!");
+        return;
     }
+
+    Object[] cols = {
+        "Number", "Brand", "Model", "Disk Type", "Disk Size", "RAM Size"
+    };
+    Object[][] rows = new Object[komputer.length][6];
+    for (int i = 0; i < komputer.length; i++) {
+        Komputer currentKomputer = komputer[i]; // Mengambil objek Komputer saat ini dari array
+        if (currentKomputer == null) {
+            break;
+        }
+        rows[i][0] = i + 1;
+        rows[i][1] = currentKomputer.getBrand();
+        rows[i][2] = currentKomputer.getModel();
+        rows[i][3] = currentKomputer.getDisk();
+        rows[i][4] = currentKomputer.getDiskSize();
+        rows[i][5] = currentKomputer.getRam();
+    }
+    JTable table = new JTable(rows, cols);
+    JOptionPane.showMessageDialog(null, new JScrollPane(table));
+}
+
     
 
     @Override
