@@ -128,7 +128,7 @@ public class DataKomputer implements AppInterface {
     };
     Object[][] rows = new Object[komputer.length][6];
     for (int i = 0; i < komputer.length; i++) {
-        Komputer currentKomputer = komputer[i]; // Mengambil objek Komputer saat ini dari array
+        Komputer currentKomputer = komputer[i]; 
         if (currentKomputer == null) {
             break;
         }
